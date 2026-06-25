@@ -3,20 +3,50 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#define NUMPOINTS 10000
+typedef struct {
+    int x, y, r, g, b;
+} Point;
 
 void clear(SDL_Surface *surface) {
     memset((uint8_t *)surface->pixels, 0, surface->h * surface->pitch);
 }
 
-void draw(SDL_Surface *surface) {
+void set_pixel(SDL_Surface *surface, Point point) {
     int width = surface->w;
-    int height = surface->h; 
+    int height = surface->h;
+    if (point.x < 0 || point.x >= width) return;
+    if (point.y < 0 || point.y >= height) return;
 
-    for (int x = 0; x < width; x++) {
-        for (int y = 0; y < height; y++) {
-            uint8_t *fb = (uint8_t*)surface->pixels;
-            fb[x + y] = 1;
+    int pitch = surface->pitch;
+
+    uint8_t *fb = (uint8_t *)surface->pixels;
+
+    /* RGBA8888
+    * pitch = bytes per row
+    * y * pitch = row start
+    * x * 4 = pixel start
+    * + 0..1..2..3 = r g b a
+    */
+    fb[point.y * pitch + point.x * 4 + 0] = point.r;
+    fb[point.y * pitch + point.x * 4 + 1] = point.g;
+    fb[point.y * pitch + point.x * 4 + 2] = point.b;
+    fb[point.y * pitch + point.x * 4 + 3] = 255;
+}
+
+void draw_rect(SDL_Surface *surface, int height, int width) {
+    int x_start = ((surface->w / 2) - (width / 2));
+    int y_start = ((surface->h / 2) - (height / 2));
+
+    for (int x = x_start; x < x_start + width; x++) {
+        for (int y = y_start; y < y_start + height; y++) {
+
+            Point point;
+            point.x = x;
+            point.y = y;
+            point.r = 150;
+            point.g = 150;
+            point.b = 255;
+            set_pixel(surface, point);
         }
     }
 }
@@ -40,9 +70,10 @@ int main() {
         SDL_Quit();
         return 1;
     }
-    clear(surface);
 
-    draw(surface);
+    clear(surface);
+    draw_rect(surface, 500, 400);
+    SDL_UpdateWindowSurface(window);
 
     while (1) {    
         SDL_Event event;
@@ -57,7 +88,11 @@ int main() {
         }
 
         if (exit) break;
+
+        SDL_Delay(16);
     }
-    
+
+    SDL_DestroyWindow(window);
+    SDL_Quit(); 
     return 0;
 }
