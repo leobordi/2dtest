@@ -11,11 +11,11 @@ void clear(SDL_Surface *surface) {
     memset((uint8_t *)surface->pixels, 0, surface->h * surface->pitch);
 }
 
-void set_pixel(SDL_Surface *surface, Point point) {
+void set_pixel(SDL_Surface *surface, int x, int y, int r, int g, int b) {
     int width = surface->w;
     int height = surface->h;
-    if (point.x < 0 || point.x >= width) return;
-    if (point.y < 0 || point.y >= height) return;
+    if (x < 0 || x >= width) return;
+    if (y < 0 || y >= height) return;
 
     int pitch = surface->pitch;
 
@@ -27,27 +27,32 @@ void set_pixel(SDL_Surface *surface, Point point) {
     * x * 4 = pixel start
     * + 0..1..2..3 = r g b a
     */
-    fb[point.y * pitch + point.x * 4 + 0] = point.r;
-    fb[point.y * pitch + point.x * 4 + 1] = point.g;
-    fb[point.y * pitch + point.x * 4 + 2] = point.b;
-    fb[point.y * pitch + point.x * 4 + 3] = 255;
+    fb[y * pitch + x * 4 + 0] = r;
+    fb[y * pitch + x * 4 + 1] = g;
+    fb[y * pitch + x * 4 + 2] = b;
+    fb[y * pitch + x * 4 + 3] = 255;
 }
 
-void draw_rect(SDL_Surface *surface, int height, int width) {
+void draw_rect(SDL_Surface *surface, int height, int width, bool filled) {
     int x_start = ((surface->w / 2) - (width / 2));
     int y_start = ((surface->h / 2) - (height / 2));
 
-    for (int x = x_start; x < x_start + width; x++) {
-        for (int y = y_start; y < y_start + height; y++) {
-
-            Point point;
-            point.x = x;
-            point.y = y;
-            point.r = 150;
-            point.g = 150;
-            point.b = 255;
-            set_pixel(surface, point);
+    if (filled) {
+        for (int x = x_start; x < x_start + width; x++) {
+            for (int y = y_start; y < y_start + height; y++) {
+                set_pixel(surface, x, y, 150, 150, 255);
+            }
         }
+    } 
+    else {
+        for (int x = x_start; x < x_start + width; x++) {
+            set_pixel(surface, x, y_start, 150, 150, 255);
+            set_pixel(surface, x, y_start + height, 150, 150, 255);
+        }
+        for (int y = y_start; y < y_start + height; y++) {
+            set_pixel(surface, x_start, y, 150, 150, 255);
+            set_pixel(surface, x_start + width, y, 150, 150, 255);
+        }        
     }
 }
 
@@ -72,7 +77,7 @@ int main() {
     }
 
     clear(surface);
-    draw_rect(surface, 500, 400);
+    draw_rect(surface, 500, 400, false);
     SDL_UpdateWindowSurface(window);
 
     while (1) {    
