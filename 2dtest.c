@@ -2,10 +2,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdint.h>
-
-typedef struct {
-    int x, y, r, g, b;
-} Point;
+#include <math.h>
 
 void clear(SDL_Surface *surface) {
     memset((uint8_t *)surface->pixels, 0, surface->h * surface->pitch);
@@ -56,6 +53,58 @@ void draw_rect(SDL_Surface *surface, int height, int width, bool filled) {
     }
 }
 
+void plot_circle_lines(SDL_Surface *surface, int cx, int cy, int x, int y) {
+    for (int i = cx - x; i <= cx + x; i++) {
+        set_pixel(surface, i, cy + y, 255, 255, 255);
+        set_pixel(surface, i, cy - y, 255, 255, 255);
+    }
+    for (int i = cx - y; i <= cx + y; i++) {
+        set_pixel(surface, i, cy + x, 255, 255, 255);
+        set_pixel(surface, i, cy - x, 255, 255, 255);
+    }
+}
+
+void plot_circle_points(SDL_Surface *surface, int cx, int cy, int x, int y) {
+    set_pixel(surface, cx - x, cy + y, 255, 255, 255);
+    set_pixel(surface, cx - x, cy - y, 255, 255, 255);
+    set_pixel(surface, cx - y, cy + x, 255, 255, 255);
+    set_pixel(surface, cx + y, cy - x, 255, 255, 255);
+
+    set_pixel(surface, cx + x, cy + y, 255, 255, 255);
+    set_pixel(surface, cx + x, cy - y, 255, 255, 255);
+    set_pixel(surface, cx + y, cy + x, 255, 255, 255);
+    set_pixel(surface, cx + y, cy - x, 255, 255, 255);
+}
+
+void draw_circle(SDL_Surface *surface, int cx, int cy, int radius, bool filled) {
+    int x = 0;
+    int y = radius;
+    int d = 1 - radius;
+
+    if (filled) {
+        plot_circle_lines(surface, cx, cy, x, y);
+    } else {
+        plot_circle_points(surface, cx, cy, x, y);
+    }
+
+    while (x < y) {
+        if (d < 0) {
+            d += 2 * x + 3;
+        } else {
+            d += 2 * (x - y) + 5;
+            y--;
+        }
+
+        x++;
+
+        if (filled) {
+            plot_circle_lines(surface, cx, cy, x, y);
+        } else {
+            plot_circle_points(surface, cx, cy, x, y);
+        }    
+    }
+}
+
 int main() {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO)) {
         printf("Errore di inizializzazione: %s\n", SDL_GetError());
@@ -77,7 +126,8 @@ int main() {
     }
 
     clear(surface);
-    draw_rect(surface, 500, 400, false);
+    draw_rect(surface, 400, 400, true);
+    draw_circle(surface, 750, 450, 200, true);
     SDL_UpdateWindowSurface(window);
 
     while (1) {    
