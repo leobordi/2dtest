@@ -127,7 +127,7 @@ int main() {
 
     clear(surface);
     draw_rect(surface, 400, 400, true);
-    draw_circle(surface, 750, 450, 200, true);
+    draw_circle(surface, 750, 450, 200, true);#000000#FFFFFF#FFFFFF#FFFFFF#F9FFFF#FFFFFF
     SDL_UpdateWindowSurface(window);
 
     while (1) {    
