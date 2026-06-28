@@ -1,6 +1,6 @@
 #include "core/window.h"
 
-Window window_init() {
+Window window_init(int height, int width) {
 	Window window;
 	
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO)) {
@@ -8,7 +8,7 @@ Window window_init() {
         exit(-1);
     }
     
-    window.window = SDL_CreateWindow("2D test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1500, 900, SDL_WINDOW_SHOWN); 
+    window.window = SDL_CreateWindow("2D test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, height, width, SDL_WINDOW_SHOWN); 
     if (!window.window) {
         printf("Errore di creazione finestra!\n");
         exit(-1);

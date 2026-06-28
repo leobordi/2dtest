@@ -2,7 +2,7 @@
 
 Engine engine_init() {
 	Engine engine;
-	engine.window = window_init();
+	engine.window = window_init(1500, 900);
 	surface_clear(engine.window.surface);
 	return engine;
 }

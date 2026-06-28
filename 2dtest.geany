@@ -28,11 +28,17 @@ long_line_behaviour=1
 long_line_column=72
 
 [files]
-current_page=3
-FILE_NAME_0=79;C;0;EUTF-8;1;1;0;%2Fhome%2Fleo%2Fprojects%2F2dtest%2Fsrc%2Fmain.c;0;4
-FILE_NAME_1=284;C;0;EUTF-8;1;1;0;%2Fhome%2Fleo%2Fprojects%2F2dtest%2Fsrc%2Fcore%2Fengine.c;0;4
+current_page=1
+FILE_NAME_0=63;C;0;EUTF-8;1;1;0;%2Fhome%2Fleo%2Fprojects%2F2dtest%2Fsrc%2Fmain.c;0;4
+FILE_NAME_1=103;C;0;EUTF-8;1;1;0;%2Fhome%2Fleo%2Fprojects%2F2dtest%2Fsrc%2Fcore%2Fengine.c;0;4
 FILE_NAME_2=82;C++;0;EUTF-8;1;1;0;%2Fhome%2Fleo%2Fprojects%2F2dtest%2Fsrc%2Fcore%2Fengine.h;0;4
 FILE_NAME_3=0;C;0;EUTF-8;1;1;0;%2Fhome%2Fleo%2Fprojects%2F2dtest%2Fsrc%2Fdraw%2Fdraw.c;0;4
+FILE_NAME_4=344;C;0;EUTF-8;1;1;0;%2Fhome%2Fleo%2Fprojects%2F2dtest%2Fsrc%2Fcore%2Fwindow.c;0;4
+FILE_NAME_5=149;C++;0;EUTF-8;1;1;0;%2Fhome%2Fleo%2Fprojects%2F2dtest%2Fsrc%2Fcore%2Fwindow.h;0;4
+FILE_NAME_6=0;C++;0;EUTF-8;1;1;0;%2Fhome%2Fleo%2Fprojects%2F2dtest%2Fsrc%2Fdraw%2Fdraw.h;0;4
+FILE_NAME_7=0;CMake;0;EUTF-8;1;1;0;%2Fhome%2Fleo%2Fprojects%2F2dtest%2FCMakeLists.txt;0;4
+FILE_NAME_8=0;C;0;EUTF-8;1;1;0;%2Fhome%2Fleo%2Fprojects%2F2dtest%2Fsrc%2Frenderer%2Fpixel.c;0;4
+FILE_NAME_9=0;C++;0;EUTF-8;1;1;0;%2Fhome%2Fleo%2Fprojects%2F2dtest%2Fsrc%2Frenderer%2Fpixel.h;0;4
 
 [VTE]
 last_dir=/home/leo
